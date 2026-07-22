@@ -6,10 +6,7 @@ import path from 'node:path'
 import siteConfiguration from './.figma/make/site.json'
 
 // Vite config — https://vitejs.dev/config/
-export default defineConfig(({ 
-  base: '/LUX.IN.TENEBRIS/',
-  plugins: [react()], }) 
-  //=> {
+export default defineConfig(({ mode }) => {
   // .figma/make/deploy-preview passes `--mode development` for cached-preview builds.
   const emitSourcemaps = mode === 'development'
 
@@ -43,7 +40,7 @@ export default defineConfig(({
       port: parseInt(process.env.PORT || '8443'),
     },
   }
-)
+})
 
 type FigmaSiteConfiguration = {
   title?: string
