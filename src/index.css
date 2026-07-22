@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloock&family=DM+Sans:wght@300;400;500&display=swap');
+@import 'tailwindcss';
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background: #000;
+}
+
+@keyframes fog-drift-a {
+  0%   { transform: translate(0%, 0%)    scale(1);    opacity: 0.18; }
+  30%  { transform: translate(4%, -3%)   scale(1.08); opacity: 0.10; }
+  60%  { transform: translate(-2%, 5%)   scale(0.95); opacity: 0.20; }
+  100% { transform: translate(0%, 0%)    scale(1);    opacity: 0.18; }
+}
+
+@keyframes fog-drift-b {
+  0%   { transform: translate(0%, 0%)    scale(1.05); opacity: 0.12; }
+  40%  { transform: translate(-5%, 2%)   scale(0.92); opacity: 0.22; }
+  70%  { transform: translate(3%, -4%)   scale(1.12); opacity: 0.08; }
+  100% { transform: translate(0%, 0%)    scale(1.05); opacity: 0.12; }
+}
+
+@keyframes fog-drift-c {
+  0%   { transform: translate(0%, 0%)    scale(0.9);  opacity: 0.08; }
+  50%  { transform: translate(6%, 4%)    scale(1.15); opacity: 0.16; }
+  100% { transform: translate(0%, 0%)    scale(0.9);  opacity: 0.08; }
+}
+
+@keyframes fog-drift-d {
+  0%   { transform: translate(0%, 0%)    scale(1.2);  opacity: 0.06; }
+  35%  { transform: translate(-3%, -5%)  scale(1.0);  opacity: 0.14; }
+  65%  { transform: translate(5%, 3%)    scale(1.3);  opacity: 0.05; }
+  100% { transform: translate(0%, 0%)    scale(1.2);  opacity: 0.06; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 40px 8px rgba(255,255,255,0.08), 0 0 0 1px rgba(255,255,255,0.15); }
+  50%       { box-shadow: 0 0 60px 16px rgba(255,255,255,0.14), 0 0 0 1px rgba(255,255,255,0.25); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pass-reveal {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)  scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.fog-layer {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.fog-a {
+  width: 80vw; height: 60vh;
+  top: -10%; left: 10%;
+  background: radial-gradient(ellipse at center, rgba(200,200,220,0.35) 0%, transparent 70%);
+  animation: fog-drift-a 18s ease-in-out infinite;
+}
+
+.fog-b {
+  width: 70vw; height: 70vh;
+  bottom: -20%; right: -10%;
+  background: radial-gradient(ellipse at center, rgba(180,185,210,0.28) 0%, transparent 70%);
+  animation: fog-drift-b 24s ease-in-out infinite;
+}
+
+.fog-c {
+  width: 55vw; height: 50vh;
+  top: 30%; left: -15%;
+  background: radial-gradient(ellipse at center, rgba(210,210,230,0.22) 0%, transparent 70%);
+  animation: fog-drift-c 20s ease-in-out infinite;
+}
+
+.fog-d {
+  width: 90vw; height: 80vh;
+  top: 20%; left: 5%;
+  background: radial-gradient(ellipse at center, rgba(150,155,180,0.15) 0%, transparent 65%);
+  animation: fog-drift-d 30s ease-in-out infinite;
+}
+
+.btn-activate {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: clamp(13px, 1.4vw, 16px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.88);
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.22);
+  padding: 18px 52px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: pulse-glow 4s ease-in-out infinite;
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-activate::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3.5s linear infinite;
+}
+
+.btn-activate:hover {
+  border-color: rgba(255,255,255,0.50);
+  color: rgba(255,255,255,1);
+  box-shadow: 0 0 70px 20px rgba(255,255,255,0.12), 0 0 0 1px rgba(255,255,255,0.35);
+}
+
+.btn-activate:active {
+  transform: scale(0.98);
+}
+
+.landing-content {
+  animation: fade-up 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.3s;
+}
+
+.pass-card {
+  animation: pass-reveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.2s;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar { display: none; }

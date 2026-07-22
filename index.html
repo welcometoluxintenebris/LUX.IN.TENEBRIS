@@ -1,39 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="<!-- figma:lang -->">
   <head>
+    <!-- figma:head-start -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Lux in TENEBRIS" />
-    <title>Lux in TENEBRIS</title>
-    <link rel="stylesheet" href="style.css" />
+    <title><!-- figma:title --></title>
+    <!-- figma:head-end -->
   </head>
   <body>
-    <main id="landing" class="landing">
-      <div class="fog fog-one" aria-hidden="true"></div>
-      <div class="fog fog-two" aria-hidden="true"></div>
-      <div class="grain" aria-hidden="true"></div>
-
-      <button id="activate-button" class="activate-button" type="button">
-        ACTIVATE YOUR PASS
-      </button>
-
-      <section id="loading" class="loading" aria-live="polite" hidden>
-        <p>Welcome to Lux in <span>TENEBRIS</span></p>
-        <small>Loading...</small>
-      </section>
-    </main>
-
-    <section id="video-screen" class="video-screen" aria-label="Lux in TENEBRIS video" hidden>
-      <!-- Sustituye assets/lux-in-tenebris.mp4 por tu archivo de vídeo. -->
-      <video id="main-video" playsinline preload="auto">
-        <source src="assets/lux-in-tenebris.mp4" type="video/mp4" />
-        Your browser does not support HTML video.
-      </video>
-      <button id="sound-button" class="sound-button" type="button" aria-label="Activate sound">
-        SOUND ON
-      </button>
-    </section>
-
-    <script src="script.js"></script>
+    <!-- figma:body-start -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- figma:body-end -->
   </body>
 </html>
