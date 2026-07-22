@@ -1,0 +1,96 @@
+:root {
+  color-scheme: dark;
+  --ink: #070907;
+  --mist: #d4e1d4;
+  --acid: #d8ff6a;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; background: var(--ink); }
+
+body {
+  overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--mist);
+}
+
+.landing, .video-screen {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.landing {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 48% 43%, #28362d 0%, #151d18 26%, #080a09 70%);
+}
+
+/* Capas borrosas que se desplazan lentamente para crear la niebla. */
+.fog {
+  position: absolute;
+  z-index: -1;
+  width: 145vw;
+  height: 58vh;
+  opacity: .52;
+  filter: blur(48px);
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(211, 236, 215, .52), transparent 38%),
+    radial-gradient(ellipse at 67% 52%, rgba(148, 186, 151, .37), transparent 35%),
+    radial-gradient(ellipse at 86% 45%, rgba(230, 248, 220, .2), transparent 27%);
+  animation: drift 17s ease-in-out infinite alternate;
+}
+
+.fog-one { top: 7%; left: -35%; }
+.fog-two { bottom: -4%; right: -44%; transform: scale(1.2) rotate(180deg); animation-duration: 23s; animation-direction: alternate-reverse; }
+
+.grain {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .2;
+  background-image: repeating-radial-gradient(circle at 25% 25%, transparent 0 1px, rgba(255,255,255,.12) 1px 2px);
+  background-size: 4px 4px;
+  mix-blend-mode: soft-light;
+}
+
+@keyframes drift {
+  from { transform: translate3d(-5%, -3%, 0) scale(1); }
+  to { transform: translate3d(13%, 7%, 0) scale(1.16); }
+}
+
+.activate-button {
+  z-index: 1;
+  padding: 1.15rem 1.55rem;
+  border: 1px solid rgba(225, 242, 220, .55);
+  border-radius: 999px;
+  color: #f2faeb;
+  background: rgba(206, 231, 203, .09);
+  box-shadow: inset 0 0 30px rgba(235,255,218,.13), 0 0 42px rgba(183,227,174,.12);
+  backdrop-filter: blur(12px);
+  font-size: clamp(.72rem, 1.4vw, .9rem);
+  font-weight: 700;
+  letter-spacing: .19em;
+  cursor: pointer;
+  transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+}
+
+.activate-button:hover, .activate-button:focus-visible {
+  outline: none;
+  transform: scale(1.05);
+  background: rgba(218, 255, 187, .19);
+  box-shadow: inset 0 0 35px rgba(235,255,218,.23), 0 0 60px rgba(204,255,155,.24);
+}
+
+.loading { z-index: 2; text-align: center; letter-spacing: .13em; }
+.loading p { margin: 0 0 .75rem; font-size: clamp(1.35rem, 4vw, 3.2rem); text-transform: uppercase; }
+.loading span { color: var(--acid); }
+.loading small { font-size: .72rem; text-transform: uppercase; animation: pulse 1s ease-in-out infinite alternate; }
+@keyframes pulse { to { opacity: .32; } }
+
+.video-screen { z-index: 3; background: #000; opacity: 0; transition: opacity .8s ease; }
+.video-screen.visible { opacity: 1; }
+.video-screen video { width: 100%; height: 100%; object-fit: cover; }
