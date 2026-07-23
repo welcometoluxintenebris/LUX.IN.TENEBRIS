@@ -1,14 +1,21 @@
 import { useState, useEffect } from 'react'
 
-type Scene = 'landing' | 'pass'
+type Scene = 'landing' | 'welcome'
 
-function FogBackground() {
+// Sequence of lines shown after the welcome title
+const LOADING_LINES = [
+  'Loading experience...',
+  'Calibrating the darkness...',
+  'Ready for it?',
+]
+
+function FogBackground({ rushing }: { rushing: boolean }) {
   return (
     <>
-      <div className="fog-layer fog-a" />
-      <div className="fog-layer fog-b" />
-      <div className="fog-layer fog-c" />
-      <div className="fog-layer fog-d" />
+      <div className="fog-layer fog-a" style={rushing ? { transform: 'scale(6)', transition: 'transform 1.6s cubic-bezier(0.4,0,1,1)', opacity: 0.9 } : undefined} />
+      <div className="fog-layer fog-b" style={rushing ? { transform: 'scale(7)', transition: 'transform 1.4s cubic-bezier(0.4,0,1,1)', opacity: 0.8 } : undefined} />
+      <div className="fog-layer fog-c" style={rushing ? { transform: 'scale(8)', transition: 'transform 1.8s cubic-bezier(0.4,0,1,1)', opacity: 1.0 } : undefined} />
+      <div className="fog-layer fog-d" style={rushing ? { transform: 'scale(5)', transition: 'transform 2.0s cubic-bezier(0.4,0,1,1)', opacity: 0.7 } : undefined} />
     </>
   )
 }
@@ -25,60 +32,50 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
         justifyContent: 'center',
         gap: '48px',
         opacity: fading ? 0 : 1,
-        transition: 'opacity 0.7s ease',
+        transition: 'opacity 0.4s ease',
         zIndex: 10,
       }}
     >
       <div className="landing-content" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-        <p
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 300,
-            fontSize: 'clamp(11px, 1.1vw, 13px)',
-            letterSpacing: '0.35em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.35)',
-            margin: 0,
-          }}
-        >
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 300,
+          fontSize: 'clamp(11px, 1.1vw, 13px)',
+          letterSpacing: '0.35em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.35)',
+          margin: 0,
+        }}>
           Limited access
         </p>
-        <h1
-          style={{
-            fontFamily: "'Gloock', serif",
-            fontWeight: 400,
-            fontSize: 'clamp(38px, 6vw, 82px)',
-            color: 'rgba(255,255,255,0.92)',
-            margin: 0,
-            letterSpacing: '-0.01em',
-            textAlign: 'center',
-            lineHeight: 1.1,
-          }}
-        >
+        <h1 style={{
+          fontFamily: "'Gloock', serif",
+          fontWeight: 400,
+          fontSize: 'clamp(38px, 6vw, 82px)',
+          color: 'rgba(255,255,255,0.92)',
+          margin: 0,
+          letterSpacing: '-0.01em',
+          textAlign: 'center',
+          lineHeight: 1.1,
+        }}>
           The night<br />
           <span style={{ color: 'rgba(255,255,255,0.42)' }}>awaits.</span>
         </h1>
       </div>
 
-      <div
-        className="landing-content"
-        style={{ animationDelay: '0.6s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px' }}
-      >
+      <div className="landing-content" style={{ animationDelay: '0.6s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px' }}>
         <button className="btn-activate" onClick={onActivate}>
           Activate your pass
         </button>
-
-        <p
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 300,
-            fontSize: 'clamp(11px, 1vw, 12px)',
-            letterSpacing: '0.15em',
-            color: 'rgba(255,255,255,0.20)',
-            margin: 0,
-            textTransform: 'uppercase',
-          }}
-        >
+        <p style={{
+          fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 300,
+          fontSize: 'clamp(11px, 1vw, 12px)',
+          letterSpacing: '0.15em',
+          color: 'rgba(255,255,255,0.20)',
+          margin: 0,
+          textTransform: 'uppercase',
+        }}>
           One-time access · Non-transferable
         </p>
       </div>
@@ -86,197 +83,172 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
   )
 }
 
-function PassCard() {
-  const now = new Date()
-  const dateStr = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }).toUpperCase()
+function WelcomePage() {
+  const [titleVisible, setTitleVisible] = useState(false)
+  const [visibleLines, setVisibleLines] = useState<number[]>([])
+
+  useEffect(() => {
+    // Title fades in after a brief pause
+    const t0 = setTimeout(() => setTitleVisible(true), 300)
+
+    // Loading lines appear one by one starting at 5s
+    const timers = LOADING_LINES.map((_, i) =>
+      setTimeout(() => {
+        setVisibleLines(prev => [...prev, i])
+      }, 5000 + i * 2200)
+    )
+
+    return () => {
+      clearTimeout(t0)
+      timers.forEach(clearTimeout)
+    }
+  }, [])
 
   return (
-    <div
-      className="pass-card"
-      style={{
-        position: 'relative',
-        width: 'clamp(300px, 90vw, 420px)',
-        border: '1px solid rgba(255,255,255,0.14)',
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)',
-        backdropFilter: 'blur(24px)',
-        padding: '48px 44px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '36px',
-      }}
-    >
-      {/* Top bar */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.3em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', margin: '0 0 6px' }}>
-            Event Pass
-          </p>
-          <p style={{ fontFamily: "'Gloock', serif", fontWeight: 400, fontSize: '22px', color: 'rgba(255,255,255,0.90)', margin: 0, letterSpacing: '-0.01em' }}>
-            Noctua
-          </p>
-        </div>
-        <div
-          style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            background: 'rgba(255,255,255,0.08)',
-            border: '1px solid rgba(255,255,255,0.15)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <circle cx="7" cy="7" r="6" stroke="rgba(255,255,255,0.5)" strokeWidth="1" />
-            <circle cx="7" cy="7" r="2.5" fill="rgba(255,255,255,0.5)" />
-          </svg>
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)' }} />
-
-      {/* Pass details */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-          <Field label="Holder" value="Guest" />
-          <Field label="Tier" value="Black" />
-          <Field label="Date" value={dateStr} />
-          <Field label="Access" value="Full" />
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div style={{ height: '1px', background: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 6px, transparent 6px, transparent 12px)' }} />
-
-      {/* Pass number */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase', margin: 0 }}>
-          Pass No.
-        </p>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: '13px', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.55)', margin: 0 }}>
-          #{Math.random().toString(36).slice(2, 8).toUpperCase()}
-        </p>
-      </div>
-
-      {/* Active indicator */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          padding: '12px 16px',
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.10)',
-        }}
-      >
-        <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#7fff8a', boxShadow: '0 0 8px #7fff8a', flexShrink: 0 }} />
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: '11px', letterSpacing: '0.25em', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', margin: 0 }}>
-          Pass activated
-        </p>
-      </div>
-    </div>
-  )
-}
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 300, fontSize: '10px', letterSpacing: '0.28em', color: 'rgba(255,255,255,0.28)', textTransform: 'uppercase', margin: 0 }}>
-        {label}
-      </p>
-      <p style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 400, fontSize: '13px', letterSpacing: '0.05em', color: 'rgba(255,255,255,0.78)', margin: 0 }}>
-        {value}
-      </p>
-    </div>
-  )
-}
-
-function PassPage({ visible }: { visible: boolean }) {
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
+    <div style={{
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: '0px',
+      zIndex: 10,
+    }}>
+      {/* Main welcome title */}
+      <div style={{
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        gap: '32px',
-        opacity: visible ? 1 : 0,
-        transition: 'opacity 0.5s ease',
-        zIndex: 10,
-      }}
-    >
-      <p
-        style={{
+        gap: '16px',
+        opacity: titleVisible ? 1 : 0,
+        transform: titleVisible ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'opacity 1.8s cubic-bezier(0.16,1,0.3,1), transform 1.8s cubic-bezier(0.16,1,0.3,1)',
+      }}>
+        <p style={{
           fontFamily: "'DM Sans', sans-serif",
           fontWeight: 300,
           fontSize: 'clamp(10px, 1vw, 12px)',
-          letterSpacing: '0.35em',
+          letterSpacing: '0.4em',
           textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.25)',
+          color: 'rgba(255,255,255,0.28)',
           margin: 0,
-          animationDelay: '0.4s',
-        }}
-        className="landing-content"
-      >
-        Welcome back
-      </p>
-      {visible && <PassCard />}
+        }}>
+          Welcome to
+        </p>
+        <h1 style={{
+          fontFamily: "'Gloock', serif",
+          fontWeight: 400,
+          fontSize: 'clamp(42px, 7vw, 96px)',
+          color: 'rgba(255,255,255,0.95)',
+          margin: 0,
+          letterSpacing: '-0.02em',
+          textAlign: 'center',
+          lineHeight: 1.0,
+        }}>
+          Lux in <span style={{ color: 'rgba(255,255,255,0.38)', fontStyle: 'italic' }}>Tenebris</span>
+        </h1>
+      </div>
+
+      {/* Loading lines container — holds space even when empty */}
+      <div style={{
+        marginTop: '72px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '20px',
+        minHeight: `${LOADING_LINES.length * 44}px`,
+      }}>
+        {LOADING_LINES.map((line, i) => (
+          <p
+            key={i}
+            style={{
+              fontFamily: "'DM Sans', sans-serif",
+              fontWeight: 300,
+              fontSize: 'clamp(12px, 1.2vw, 15px)',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: i === visibleLines[visibleLines.length - 1]
+                ? 'rgba(255,255,255,0.70)'
+                : 'rgba(255,255,255,0.28)',
+              margin: 0,
+              opacity: visibleLines.includes(i) ? 1 : 0,
+              transform: visibleLines.includes(i) ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 1.4s cubic-bezier(0.16,1,0.3,1), transform 1.4s cubic-bezier(0.16,1,0.3,1), color 0.8s ease',
+            }}
+          >
+            {line}
+          </p>
+        ))}
+      </div>
     </div>
   )
 }
 
 export default function App() {
   const [scene, setScene] = useState<Scene>('landing')
-  const [fading, setFading] = useState(false)
-  const [overlayOpacity, setOverlayOpacity] = useState(0)
-  const [showPass, setShowPass] = useState(false)
+  const [rushing, setRushing] = useState(false)
+  const [landingFading, setLandingFading] = useState(false)
+  // White fog rush overlay
+  const [fogOverlay, setFogOverlay] = useState(0)
+  // Final black overlay before welcome
+  const [blackOverlay, setBlackOverlay] = useState(0)
+  const [showWelcome, setShowWelcome] = useState(false)
 
   const handleActivate = () => {
-    setFading(true)
-    // Fade landing content out + overlay in
-    setTimeout(() => setOverlayOpacity(1), 50)
-    // Switch scene at peak of overlay
+    // 1. Fade out landing text immediately
+    setLandingFading(true)
+    // 2. Fog starts rushing toward camera
+    setTimeout(() => setRushing(true), 100)
+    // 3. White-fog overlay washes in as fog fills screen
+    setTimeout(() => setFogOverlay(1), 400)
+    // 4. Black closes over the white
+    setTimeout(() => setBlackOverlay(1), 1200)
+    // 5. Switch scene while black
     setTimeout(() => {
-      setScene('pass')
-      setOverlayOpacity(0)
-    }, 850)
-    // Reveal pass content after overlay fades
-    setTimeout(() => {
-      setShowPass(true)
-    }, 1400)
+      setScene('welcome')
+      setShowWelcome(true)
+    }, 1700)
+    // 6. Black fades out revealing welcome
+    setTimeout(() => setBlackOverlay(0), 1900)
+    // 7. Clean up fog overlay
+    setTimeout(() => setFogOverlay(0), 2000)
   }
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100vh',
-        overflow: 'hidden',
-        backgroundColor: '#030305',
-      }}
-    >
-      <FogBackground />
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      height: '100vh',
+      overflow: 'hidden',
+      backgroundColor: '#030305',
+    }}>
+      <FogBackground rushing={rushing} />
 
-      {/* Transition overlay */}
-      <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: '#000',
-          opacity: overlayOpacity,
-          transition: overlayOpacity === 1 ? 'opacity 0.6s ease' : 'opacity 0.7s ease',
-          pointerEvents: overlayOpacity > 0.5 ? 'all' : 'none',
-          zIndex: 50,
-        }}
-      />
+      {/* White fog rush overlay */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        background: 'radial-gradient(ellipse at center, rgba(220,225,240,0.95) 0%, rgba(180,185,210,0.85) 60%, transparent 100%)',
+        opacity: fogOverlay,
+        transition: fogOverlay === 1 ? 'opacity 0.9s cubic-bezier(0.4,0,1,1)' : 'opacity 0.4s ease',
+        pointerEvents: 'none',
+        zIndex: 30,
+      }} />
 
-      {scene === 'landing' && <LandingPage onActivate={handleActivate} fading={fading} />}
-      {scene === 'pass' && <PassPage visible={showPass} />}
+      {/* Black curtain overlay */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: '#000',
+        opacity: blackOverlay,
+        transition: blackOverlay === 1 ? 'opacity 0.6s ease' : 'opacity 0.8s ease',
+        pointerEvents: blackOverlay > 0.5 ? 'all' : 'none',
+        zIndex: 40,
+      }} />
+
+      {scene === 'landing' && <LandingPage onActivate={handleActivate} fading={landingFading} />}
+      {scene === 'welcome' && showWelcome && <WelcomePage />}
     </div>
   )
 }
