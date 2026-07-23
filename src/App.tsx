@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import videoSrc from "../assets/videoplayback.mp4";
+import videoSrc from "assets/videoplayback.mp4";
 
 type Scene = 'landing' | 'welcome'
 
