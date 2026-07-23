@@ -123,7 +123,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           margin: 0,
           textTransform: 'uppercase',
         }}>
-          One-time access · Non-transferable
+          One-time access · Non-transferable · Activate sound
         </p>
       </div>
     </div>
@@ -281,7 +281,7 @@ export default function App() {
       video.defaultMuted = false
       video.muted = false
       video.volume = 1
-      
+
       void video.play()
     }
 
