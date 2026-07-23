@@ -153,7 +153,7 @@ function VideoScreen({ visible }: { visible: boolean }) {
         }}
       >
         {/* Reemplaza con la ruta a tu video, ej: src="/video.mp4" */}
-        <source src="/videoplayback.mp4" type="video/mp4" />
+        <source src="../assets/videoplayback.mp4" type="video/mp4" />
       </video>
     </div>
   )
