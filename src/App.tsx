@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import videoSrc from "../assets/videoplayback.mp4";
 
 type Scene = 'landing' | 'welcome'
 
@@ -153,7 +154,7 @@ function VideoScreen({ visible }: { visible: boolean }) {
         }}
       >
         {/* Reemplaza con la ruta a tu video, ej: src="/video.mp4" */}
-        <source src="../assets/videoplayback.mp4" type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
     </div>
   )
