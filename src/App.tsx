@@ -148,9 +148,10 @@ function VideoScreen({ visible,
       pointerEvents: visible ? 'all' : 'none',
     }}>
       <video
-        autoPlay
+        ref={videoRef}
         loop
         playsInline
+        controls
         style={{
           width: '100%',
           height: '100%',
@@ -276,9 +277,12 @@ export default function App() {
     const video = videoRef.current
 
     if (video) {
+      video.removeAttribute('muted')
+      video.defaultMuted = false
       video.muted = false
       video.volume = 1
-      video.play().catch(console.error)
+      
+      void video.play()
     }
 
     // 1. Landing content fades out
