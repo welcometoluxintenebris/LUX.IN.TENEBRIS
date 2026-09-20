@@ -226,8 +226,8 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
           Welcome to
         </p>
         <h1 style={{
-          fontFamily: "'Gloock', serif",
-          fontWeight: 400,
+          fontFamily: "'Velista', serif",
+          fontWeight: 'normal',
           fontSize: 'clamp(42px, 7vw, 96px)',
           color: 'rgba(255,255,255,0.95)',
           margin: 0,
@@ -235,7 +235,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
           textAlign: 'center',
           lineHeight: 1.0,
         }}>
-          Lux in <span style={{ color: 'rgba(255,255,255,0.38)', fontStyle: 'italic' }}>Tenebris</span>
+          Lux in <span style={{ color: 'rgba(155,0,0,0.75)', fontFamily: "'Velista', serif", fontStyle: 'italic' }}>Tenebris</span>
         </h1>
       </div>
 
