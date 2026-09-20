@@ -293,35 +293,6 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
           </p>
         ))}
       </div>
-      {/* Loading lines + progress bar */}
-      <div style={{
-        marginTop: '72px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '20px',
-        minHeight: `${LOADING_LINES.length * 44}px`,
-      }}>
-        {LOADING_LINES.map((line, i) => (
-          <p key={i} style={{
-            fontFamily: "'DM Sans', sans-serif",
-            fontWeight: 300,
-            fontSize: 'clamp(12px, 1.2vw, 15px)',
-            letterSpacing: '0.22em',
-            textTransform: 'uppercase',
-            color: i === visibleLines[visibleLines.length - 1]
-              ? 'rgba(255,255,255,0.70)'
-              : 'rgba(255,255,255,0.28)',
-            margin: 0,
-            opacity: visibleLines.includes(i) ? 1 : 0,
-            transform: visibleLines.includes(i) ? 'translateY(0)' : 'translateY(12px)',
-            transition: 'opacity 1.4s cubic-bezier(0.16,1,0.3,1), transform 1.4s cubic-bezier(0.16,1,0.3,1), color 0.8s ease',
-          }}>
-            {line}
-          </p>
-        ))}
-      </div>
-
       {/* Progress bar */}
       <div style={{
         marginTop: '40px',
