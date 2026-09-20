@@ -180,7 +180,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
     const t0 = setTimeout(() => setTitleVisible(true), 300)
 
     const lineTimers = LOADING_LINES.map((_, i) =>
-      setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 6200)
+      setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
     )
 
     // "Ready for it?" is the last line. It appears at 5000 + 2*2200 = 9400ms.
