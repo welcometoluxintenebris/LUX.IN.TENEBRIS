@@ -176,7 +176,7 @@ function VideoScreen({ visible,
 const VIDEO_START_DELAY = 5000
 const LINE_0_DELAY = 3000
 const LINES_AFTER_VIDEO = [15000, 17000]
-const LINES_DELAY = [11900, 14000, 15500]
+const LINES_DELAY = [12100, 14000, 15500]
 
 // Progress bar spans from LINE_0_DELAY to the last line appearance
 // Last line at: VIDEO_START_DELAY + LINES_AFTER_VIDEO[last] = 5000 + 17000 = 22000ms
@@ -398,3 +398,6 @@ export default function App() {
     </div>
   )
 }
+
+//      <FogBackground />
+//      <TunnelTransition active={tunnelActive} />
