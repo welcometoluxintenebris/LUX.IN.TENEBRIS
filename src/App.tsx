@@ -177,15 +177,15 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
   const [visibleLines, setVisibleLines] = useState<number[]>([])
 
   useEffect(() => {
-    const t0 = setTimeout(() => setTitleVisible(true), 400)
+    const t0 = setTimeout(() => setTitleVisible(true), 300)
 
     const lineTimers = LOADING_LINES.map((_, i) =>
-      setTimeout(() => setVisibleLines(prev => [...prev, i]), 4000 + i * 2200)
+      setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 6200)
     )
 
     // "Ready for it?" is the last line. It appears at 5000 + 2*2200 = 9400ms.
     // 3 seconds after that → 12400ms
-    const lastLineDelay = 9000 + (LOADING_LINES.length - 1) * 2200
+    const lastLineDelay = 10000 + (LOADING_LINES.length - 1) * 2200
     const videoTimer = setTimeout(onVideoReady, lastLineDelay + 3000)
 
     return () => {
