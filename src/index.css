@@ -189,6 +189,7 @@ html, body, #root {
 .landing-content {
   animation: fade-up 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.3s;
+  color: #9b0000;
 }
 
 .pass-card {
