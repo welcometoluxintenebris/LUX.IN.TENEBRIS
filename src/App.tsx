@@ -96,7 +96,8 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           Limited access
         </p>
         <h1 style={{
-          fontFamily: "'Gloock', serif",
+          //fontFamily: "'Gloock', serif",
+          fontFamily: "'Velista', regular"
           fontWeight: 400,
           fontSize: 'clamp(38px, 6vw, 82px)',
           color: 'rgba(255,255,255,0.92)',
@@ -105,14 +106,14 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           textAlign: 'center',
           lineHeight: 1.1,
         }}>
-          The night<br />
-          <span style={{ color: 'rgba(255,255,255,0.42)' }}>awaits.</span>
+          La noche<br />
+          <span style={{ color: 'rgb(155, 0, 0)' }}>te espera.</span>
         </h1>
       </div>
 
       <div className="landing-content" style={{ animationDelay: '0.6s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px' }}>
         <button className="btn-activate" onClick={onActivate}>
-          Activate your pass
+          Activa tu pase
         </button>
         <p style={{
           fontFamily: "'DM Sans', sans-serif",
@@ -123,7 +124,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           margin: 0,
           textTransform: 'uppercase',
         }}>
-          One-time access · Non-transferable · Activate sound
+          Activa el sonido
         </p>
       </div>
     </div>
