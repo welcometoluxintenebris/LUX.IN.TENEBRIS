@@ -158,7 +158,6 @@ function VideoScreen({ visible,
         ref={videoRef}
         loop
         playsInline
-        controls
         style={{
           width: '100%',
           height: '100%',
