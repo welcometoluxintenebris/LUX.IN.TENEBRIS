@@ -69,9 +69,23 @@ html, body, #root {
   50%       { box-shadow: 0 0 60px 16px rgba(255,255,255,0.14), 0 0 0 1px rgba(255,255,255,0.25); }
 }
 
-@keyframes fade-up {
+@keyframes fade-up2 {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    color: rgba(155, 0, 0, 0.75);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    color: rgba(155, 0, 0, 0.30);
+  }
 }
 
 @keyframes pass-reveal {
@@ -189,7 +203,6 @@ html, body, #root {
 .landing-content {
   animation: fade-up 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.3s;
-  color: #9b0000;
 }
 
 .pass-card {

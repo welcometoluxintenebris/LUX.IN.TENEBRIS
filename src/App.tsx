@@ -115,7 +115,8 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
       <div className="landing-content" style={{ animationDelay: '0.6s', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px' }}>
         <button className="btn-activate" onClick={onActivate} style={{
           fontFamily: "'Sparkle Passion', serif",
-          fontWeight: 'normal'
+          fontWeight: 'normal',
+          fontSize: 'clamp(16px, 1vw, 12px)',
         }}>
           Activa tu pase
         </button>
