@@ -195,21 +195,19 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
 
     // Line 0 + bar at 3s
     timers.push(setTimeout(() => {
-      setVisibleLines(prev => [...prev, 0], 2000)
+      setVisibleLines(prev => [...prev, 0])
       setBarVisible(true)
       // Tiny delay so the 0% state renders before transitioning to 100%
-      
-    },))
+      setTimeout(() => setBarFull(true), 60)
+    }, LINE_0_DELAY))
 
     // Lines 1 and 2: 15s and 17s after video starts
     LINES_AFTER_VIDEO.forEach((delay, i) => {
-      timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), VIDEO_START_DELAY + delay))
+      timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), delay))
     })
 
-    setTimeout(() => setBarFull(true), 55)
-
     // Video starts at 5s
-    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY + VIDEO_START_DELAY + 10000))
+    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
 
     //const lineTimers = LOADING_LINES.map((_, i) =>
     //  setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
