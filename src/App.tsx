@@ -201,13 +201,13 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
       setTimeout(() => setBarFull(true), 60)
     }, LINE_0_DELAY))
 
-    // Video starts at 5s
-    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
-
     // Lines 1 and 2: 15s and 17s after video starts
     LINES_AFTER_VIDEO.forEach((delay, i) => {
       timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), VIDEO_START_DELAY + delay))
     })
+
+    // Video starts at 5s
+    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
 
     //const lineTimers = LOADING_LINES.map((_, i) =>
     //  setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
