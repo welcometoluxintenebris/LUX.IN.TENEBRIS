@@ -175,6 +175,7 @@ function VideoScreen({ visible,
 const VIDEO_START_DELAY = 5000
 const LINE_0_DELAY = 3000
 const LINES_AFTER_VIDEO = [15000, 17000]
+const LINES_DELAY = [4000, 4500]
 
 // Progress bar spans from LINE_0_DELAY to the last line appearance
 // Last line at: VIDEO_START_DELAY + LINES_AFTER_VIDEO[last] = 5000 + 17000 = 22000ms
@@ -202,7 +203,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
     }, LINE_0_DELAY))
 
     // Lines 1 and 2: 15s and 17s after video starts
-    LINES_AFTER_VIDEO.forEach((delay, i) => {
+    LINES_DELAY.forEach((delay, i) => {
       timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), delay))
     })
 
