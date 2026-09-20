@@ -207,7 +207,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
     })
 
     // Video starts at 5s
-    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY + VIDEO_START_DELAY + delay * 1000))
+    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY + VIDEO_START_DELAY + 3000))
 
     //const lineTimers = LOADING_LINES.map((_, i) =>
     //  setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
