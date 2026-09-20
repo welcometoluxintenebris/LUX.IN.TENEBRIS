@@ -121,13 +121,13 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           Activa tu pase
         </button>
         <p style={{
-          fontFamily: "'AppleGaramond', sans-serif",
-          fontWeight: 'normal',
-          fontSize: 'clamp(14px, 1vw, 12px)',
-          letterSpacing: '0.2em',
-          color: 'rgba(255, 255, 255, 0.5)',
-          margin: 0,
+          fontFamily: "'DM Sans', sans-serif",
+          fontWeight: 300,
+          fontSize: 'clamp(11px, 1.1vw, 13px)',
+          letterSpacing: '0.35em',
           textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.35)',
+          margin: 0,
         }}>
           Sube el volumen
         </p>
