@@ -98,15 +98,15 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
         <h1 style={{
           //fontFamily: "'Gloock', serif",
           fontFamily: "'Velista', serif",
-          fontWeight: 400,
+          fontWeight: 'normal',
           fontSize: 'clamp(38px, 6vw, 82px)',
           color: 'rgba(255,255,255,0.92)',
           margin: 0,
-          letterSpacing: '-0.01em',
+          letterSpacing: '0.02em',
           textAlign: 'center',
           lineHeight: 1.1,
         }}>
-          La noche<br />
+          La NOCHE<br />
           <span style={{ color: 'rgba(155, 0, 0, 0.71)' }}>te espera.</span>
         </h1>
       </div>
