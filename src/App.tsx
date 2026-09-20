@@ -107,7 +107,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           lineHeight: 1.1,
         }}>
           LA
-          <span style={{ color: 'rgba(155, 0, 0, 0.71)' }}>NOCHE.</span><br />
+          <span style={{ color: 'rgba(155, 0, 0, 0.75)' }}> NOCHE</span><br />
           TE ESPERA
         </h1>
       </div>
@@ -117,7 +117,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           Activa tu pase
         </button>
         <p style={{
-          fontFamily: "'DM Sans', sans-serif",
+          fontFamily: "'AppleGaramond', sans-serif",
           fontWeight: 300,
           fontSize: 'clamp(11px, 1vw, 12px)',
           letterSpacing: '0.15em',
