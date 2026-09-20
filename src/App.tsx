@@ -195,7 +195,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
 
     // Line 0 + bar at 3s
     timers.push(setTimeout(() => {
-      setVisibleLines(prev => [...prev, 0])
+      setVisibleLines(prev => [...prev, 0], 2000)
       setBarVisible(true)
       // Tiny delay so the 0% state renders before transitioning to 100%
       setTimeout(() => setBarFull(true), 60)
@@ -207,7 +207,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
     })
 
     // Video starts at 5s
-    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
+    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY + VIDEO_START_DELAY + delay * 1000))
 
     //const lineTimers = LOADING_LINES.map((_, i) =>
     //  setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
