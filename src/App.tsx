@@ -106,8 +106,9 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           textAlign: 'center',
           lineHeight: 1.1,
         }}>
-          La NOCHE<br />
-          <span style={{ color: 'rgba(155, 0, 0, 0.71)' }}>te espera.</span>
+          LA
+          <span style={{ color: 'rgba(155, 0, 0, 0.71)' }}>NOCHE.</span><br />
+          TE ESPERA
         </h1>
       </div>
 
