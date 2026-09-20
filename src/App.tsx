@@ -215,11 +215,13 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
     const lastLineDelay = 10000 + (LOADING_LINES.length - 1) * 2200
     const videoTimer = setTimeout(onVideoReady, lastLineDelay + 3000)
 
-    return () => {
-      clearTimeout(t0)
-      lineTimers.forEach(clearTimeout)
-      clearTimeout(videoTimer)
-    }
+    //return () => {
+    //  clearTimeout(t0)
+    //  lineTimers.forEach(clearTimeout)
+    //  clearTimeout(videoTimer)
+    //}
+  //}, [onVideoReady])
+    return () => timers.forEach(clearTimeout)
   }, [onVideoReady])
 
   return (
