@@ -108,7 +108,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           lineHeight: 1.1,
         }}>
           LA
-          <span style={{ color: 'rgba(155, 0, 0, 0.75)' }}> NOCHE</span><br />
+          <span style={{ color: 'rgba(155, 0, 0, 1)' }}> NOCHE</span><br />
           TE ESPERA
         </h1>
       </div>
@@ -200,7 +200,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
       setVisibleLines(prev => [...prev, 0])
       setBarVisible(true)
       // Tiny delay so the 0% state renders before transitioning to 100%
-      setTimeout(() => setBarFull(true), 70)
+      setTimeout(() => setBarFull(true), 40)
     }, LINE_0_DELAY))
 
     // Lines 1 and 2: 15s and 17s after video starts
@@ -269,7 +269,7 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
           textAlign: 'center',
           lineHeight: 1.0,
         }}>
-          Lux in <span style={{ color: 'rgba(155,0,0,0.75)', fontFamily: "'Velista', serif", fontStyle: 'italic' }}>Tenebris</span>
+          Lux in <span style={{ color: 'rgba(155,0,0,1)', fontFamily: "'Velista', serif", fontStyle: 'italic' }}>Tenebris</span>
         </h1>
       </div>
 
