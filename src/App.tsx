@@ -6,8 +6,8 @@ type Scene = 'landing' | 'welcome'
 const LOADING_LINES = [
   'Loading experience...',
   'Calibrating the darkness...',
-  'The light is fading...'
-  'The night is calling...'
+  'The light is fading...',
+  'The night is calling...',
   'Ready for it?',
 ]
 
