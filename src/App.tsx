@@ -97,8 +97,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
         </p>
         <h1 style={{
           //fontFamily: "'Gloock', serif",
-          fontFamily: "'Velista'",
-          src: url('/.fonts/VELISTA.ttf'),
+          fontFamily: "'Velista', serif",
           fontWeight: 400,
           fontSize: 'clamp(38px, 6vw, 82px)',
           color: 'rgba(255,255,255,0.92)',
@@ -125,7 +124,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           margin: 0,
           textTransform: 'uppercase',
         }}>
-          Activa el sonido
+          Sube el volumen
         </p>
       </div>
     </div>
