@@ -108,7 +108,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
           lineHeight: 1.1,
         }}>
           LA
-          <span style={{ color: 'rgba(155, 0, 0, 1)' }}> NOCHE</span><br />
+          <span style={{ color: 'rgb(117, 0, 1)' }}> NOCHE</span><br />
           TE ESPERA
         </h1>
       </div>
@@ -380,8 +380,6 @@ export default function App() {
       overflow: 'hidden',
       backgroundColor: '#030305',
     }}>
-      <FogBackground />
-      <TunnelTransition active={tunnelActive} />
 
       {/* Black curtain */}
       <div style={{
