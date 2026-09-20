@@ -172,12 +172,39 @@ function VideoScreen({ visible,
   )
 }
 
+const VIDEO_START_DELAY = 5000
+const LINE_0_DELAY = 3000
+const LINES_AFTER_VIDEO = [15000, 17000]
+
+// Progress bar spans from LINE_0_DELAY to the last line appearance
+// Last line at: VIDEO_START_DELAY + LINES_AFTER_VIDEO[last] = 5000 + 17000 = 22000ms
+// Bar duration: 22000 - 3000 = 19000ms
+const BAR_DURATION_MS = (VIDEO_START_DELAY + LINES_AFTER_VIDEO[LINES_AFTER_VIDEO.length - 1]) - LINE_0_DELAY
+
 function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
   const [titleVisible, setTitleVisible] = useState(false)
   const [visibleLines, setVisibleLines] = useState<number[]>([])
+  const [barVisible, setBarVisible] = useState(false)
+  const [barFull, setBarFull] = useState(false)
 
   useEffect(() => {
     const t0 = setTimeout(() => setTitleVisible(true), 300)
+
+    // Line 0 + bar at 3s
+    timers.push(setTimeout(() => {
+      setVisibleLines(prev => [...prev, 0])
+      setBarVisible(true)
+      // Tiny delay so the 0% state renders before transitioning to 100%
+      setTimeout(() => setBarFull(true), 60)
+    }, LINE_0_DELAY))
+
+    // Video starts at 5s
+    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
+
+    // Lines 1 and 2: 15s and 17s after video starts
+    LINES_AFTER_VIDEO.forEach((delay, i) => {
+      timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), VIDEO_START_DELAY + delay))
+    })
 
     const lineTimers = LOADING_LINES.map((_, i) =>
       setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
@@ -265,6 +292,62 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
             {line}
           </p>
         ))}
+      </div>
+      {/* Loading lines + progress bar */}
+      <div style={{
+        marginTop: '72px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '20px',
+        minHeight: `${LOADING_LINES.length * 44}px`,
+      }}>
+        {LOADING_LINES.map((line, i) => (
+          <p key={i} style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fontWeight: 300,
+            fontSize: 'clamp(12px, 1.2vw, 15px)',
+            letterSpacing: '0.22em',
+            textTransform: 'uppercase',
+            color: i === visibleLines[visibleLines.length - 1]
+              ? 'rgba(255,255,255,0.70)'
+              : 'rgba(255,255,255,0.28)',
+            margin: 0,
+            opacity: visibleLines.includes(i) ? 1 : 0,
+            transform: visibleLines.includes(i) ? 'translateY(0)' : 'translateY(12px)',
+            transition: 'opacity 1.4s cubic-bezier(0.16,1,0.3,1), transform 1.4s cubic-bezier(0.16,1,0.3,1), color 0.8s ease',
+          }}>
+            {line}
+          </p>
+        ))}
+      </div>
+
+      {/* Progress bar */}
+      <div style={{
+        marginTop: '40px',
+        width: 'clamp(160px, 22vw, 260px)',
+        opacity: barVisible ? 1 : 0,
+        transition: 'opacity 1.2s ease',
+      }}>
+        {/* Track */}
+        <div style={{
+          width: '100%',
+          height: '1px',
+          background: 'rgba(255,255,255,0.10)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {/* Fill */}
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            width: barFull ? '100%' : '0%',
+            background: 'linear-gradient(90deg, rgba(255,255,255,0.25), rgba(255,255,255,0.60))',
+            transition: barFull ? `width ${BAR_DURATION_MS}ms linear` : 'none',
+          }} />
+        </div>
       </div>
     </div>
   )
