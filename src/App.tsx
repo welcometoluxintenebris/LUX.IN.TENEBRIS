@@ -98,6 +98,7 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
         <h1 style={{
           //fontFamily: "'Gloock', serif",
           fontFamily: "'Velista', serif",
+          src: url('/.fonts/VELISTA.ttf') format('tff'),
           fontWeight: 400,
           fontSize: 'clamp(38px, 6vw, 82px)',
           color: 'rgba(255,255,255,0.92)',
