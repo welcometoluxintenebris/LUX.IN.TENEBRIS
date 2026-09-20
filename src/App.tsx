@@ -188,43 +188,44 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
   const [barFull, setBarFull] = useState(false)
 
   useEffect(() => {
-    const t0 = setTimeout(() => setTitleVisible(true), 300)
+    //const t0 = setTimeout(() => setTitleVisible(true), 300)
+    const timers: ReturnType<typeof setTimeout>[] = []
 
-    //timers.push(setTimeout(() => setTitleVisible(true), 300))
-//
-    //// Line 0 + bar at 3s
-    //timers.push(setTimeout(() => {
-    //  setVisibleLines(prev => [...prev, 0])
-    //  setBarVisible(true)
-    //  // Tiny delay so the 0% state renders before transitioning to 100%
-    //  setTimeout(() => setBarFull(true), 60)
-    //}, LINE_0_DELAY))
-//
-    //// Video starts at 5s
-    //timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
-//
-    //// Lines 1 and 2: 15s and 17s after video starts
-    //LINES_AFTER_VIDEO.forEach((delay, i) => {
-    //  timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), VIDEO_START_DELAY + delay))
-    //})
+    timers.push(setTimeout(() => setTitleVisible(true), 300))
 
-    const lineTimers = LOADING_LINES.map((_, i) =>
-      setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
-    )
+    // Line 0 + bar at 3s
+    timers.push(setTimeout(() => {
+      setVisibleLines(prev => [...prev, 0])
+      setBarVisible(true)
+      // Tiny delay so the 0% state renders before transitioning to 100%
+      setTimeout(() => setBarFull(true), 60)
+    }, LINE_0_DELAY))
+
+    // Video starts at 5s
+    timers.push(setTimeout(onVideoReady, VIDEO_START_DELAY))
+
+    // Lines 1 and 2: 15s and 17s after video starts
+    LINES_AFTER_VIDEO.forEach((delay, i) => {
+      timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), VIDEO_START_DELAY + delay))
+    })
+
+    //const lineTimers = LOADING_LINES.map((_, i) =>
+    //  setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
+    //)
 
     // "Ready for it?" is the last line. It appears at 5000 + 2*2200 = 9400ms.
     // 3 seconds after that → 12400ms
-    const lastLineDelay = 10000 + (LOADING_LINES.length - 1) * 2200
-    const videoTimer = setTimeout(onVideoReady, lastLineDelay + 3000)
+    //const lastLineDelay = 10000 + (LOADING_LINES.length - 1) * 2200
+    //const videoTimer = setTimeout(onVideoReady, lastLineDelay + 3000)
 
-    return () => {
-      clearTimeout(t0)
-      lineTimers.forEach(clearTimeout)
-      clearTimeout(videoTimer)
-    }
-  }, [onVideoReady])
-  //  return () => timers.forEach(clearTimeout)
+    //return () => {
+    //  clearTimeout(t0)
+    //  lineTimers.forEach(clearTimeout)
+    //  clearTimeout(videoTimer)
+    //}
   //}, [onVideoReady])
+    return () => timers.forEach(clearTimeout)
+  }, [onVideoReady])
 
   return (
     <div style={{
