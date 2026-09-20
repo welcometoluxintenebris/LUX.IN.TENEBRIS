@@ -188,7 +188,9 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
   const [barFull, setBarFull] = useState(false)
 
   useEffect(() => {
-    const t0 = setTimeout(() => setTitleVisible(true), 300)
+    //const t0 = setTimeout(() => setTitleVisible(true), 300)
+
+    timers.push(setTimeout(() => setTitleVisible(true), 300))
 
     // Line 0 + bar at 3s
     timers.push(setTimeout(() => {
@@ -206,14 +208,14 @@ function WelcomePage({ onVideoReady }: { onVideoReady: () => void }) {
       timers.push(setTimeout(() => setVisibleLines(prev => [...prev, i + 1]), VIDEO_START_DELAY + delay))
     })
 
-    const lineTimers = LOADING_LINES.map((_, i) =>
-      setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
-    )
+    //const lineTimers = LOADING_LINES.map((_, i) =>
+    //  setTimeout(() => setVisibleLines(prev => [...prev, i]), 3000 + i * 9000)
+    //)
 
     // "Ready for it?" is the last line. It appears at 5000 + 2*2200 = 9400ms.
     // 3 seconds after that → 12400ms
-    const lastLineDelay = 10000 + (LOADING_LINES.length - 1) * 2200
-    const videoTimer = setTimeout(onVideoReady, lastLineDelay + 3000)
+    //const lastLineDelay = 10000 + (LOADING_LINES.length - 1) * 2200
+    //const videoTimer = setTimeout(onVideoReady, lastLineDelay + 3000)
 
     //return () => {
     //  clearTimeout(t0)
