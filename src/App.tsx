@@ -223,7 +223,7 @@ function CountdownScreen() {
 
         <time
           className="countdown-grid"
-          dateTime="2027-03-06T12:00:00+01:00"
+          dateTime="2026-10-23T17:50:00+01:00"
           aria-label={`${remaining.days} días, ${remaining.hours} horas, ${remaining.minutes} minutos y ${remaining.seconds} segundos`}
         >
           {units.map(({ label, value }) => (
@@ -236,7 +236,7 @@ function CountdownScreen() {
 
         <div className="countdown-date">
           <span />
-          Madrid · 06 Marzo 2027 · 12:00
+          Elche · 06 Marzo 2027 · 12:00
           <span />
         </div>
       </div>
