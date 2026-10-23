@@ -190,59 +190,59 @@ function VideoScreen({ visible,
   )
 }
 
-//function CountdownScreen() {
-//  const [remaining, setRemaining] = useState(getCountdown)
-//
-//  useEffect(() => {
-//    const interval = window.setInterval(() => setRemaining(getCountdown()), 1000)
-//    return () => window.clearInterval(interval)
-//  }, [])
-//
-//  const units = [
-//    { label: 'Días', value: remaining.days },
-//    { label: 'Horas', value: remaining.hours },
-//    { label: 'Minutos', value: remaining.minutes },
-//    { label: 'Segundos', value: remaining.seconds },
-//  ]
-//
-//  return (
-//    <section className="countdown-screen" aria-labelledby="countdown-title">
-//      <div className="countdown-haze countdown-haze-left" />
-//      <div className="countdown-haze countdown-haze-right" />
-//      <div className="countdown-content">
-//        <p className="countdown-eyebrow">
-//          {remaining.total > 0 ? 'La noche comienza en' : 'Ha llegado el momento'}
-//        </p>
-//        <h1 id="countdown-title" className="countdown-title">
-//          {remaining.total > 0 ? (
-//            <>Lux in <span>Tenebris</span></>
-//          ) : (
-//            <>La noche <span>es tuya</span></>
-//          )}
-//        </h1>
-//
-//        <time
-//          className="countdown-grid"
-//          dateTime="2027-03-06T12:00:00+01:00"
-//          aria-label={`${remaining.days} días, ${remaining.hours} horas, ${remaining.minutes} minutos y ${remaining.seconds} segundos`}
-//        >
-//          {units.map(({ label, value }) => (
-//            <span className="countdown-unit" key={label}>
-//              <span className="countdown-value">{String(value).padStart(2, '0')}</span>
-//              <span className="countdown-label">{label}</span>
-//            </span>
-//          ))}
-//        </time>
-//
-//        <div className="countdown-date">
-//          <span />
-//          Madrid · 06 Marzo 2027 · 12:00
-//          <span />
-//        </div>
-//      </div>
-//    </section>
-//  )
-//}
+function CountdownScreen() {
+  const [remaining, setRemaining] = useState(getCountdown)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setRemaining(getCountdown()), 1000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const units = [
+    { label: 'Días', value: remaining.days },
+    { label: 'Horas', value: remaining.hours },
+    { label: 'Minutos', value: remaining.minutes },
+    { label: 'Segundos', value: remaining.seconds },
+  ]
+
+  return (
+    <section className="countdown-screen" aria-labelledby="countdown-title">
+      <div className="countdown-haze countdown-haze-left" />
+      <div className="countdown-haze countdown-haze-right" />
+      <div className="countdown-content">
+        <p className="countdown-eyebrow">
+          {remaining.total > 0 ? 'La noche comienza en' : 'Ha llegado el momento'}
+        </p>
+        <h1 id="countdown-title" className="countdown-title">
+          {remaining.total > 0 ? (
+            <>Lux in <span>Tenebris</span></>
+          ) : (
+            <>La noche <span>es tuya</span></>
+          )}
+        </h1>
+
+        <time
+          className="countdown-grid"
+          dateTime="2027-03-06T12:00:00+01:00"
+          aria-label={`${remaining.days} días, ${remaining.hours} horas, ${remaining.minutes} minutos y ${remaining.seconds} segundos`}
+        >
+          {units.map(({ label, value }) => (
+            <span className="countdown-unit" key={label}>
+              <span className="countdown-value">{String(value).padStart(2, '0')}</span>
+              <span className="countdown-label">{label}</span>
+            </span>
+          ))}
+        </time>
+
+        <div className="countdown-date">
+          <span />
+          Madrid · 06 Marzo 2027 · 12:00
+          <span />
+        </div>
+      </div>
+    </section>
+  )
+}
 
 const VIDEO_START_DELAY = 5000
 const LINE_0_DELAY = 3000
@@ -409,13 +409,13 @@ export default function App() {
   const [blackOverlay, setBlackOverlay] = useState(0)
   const [showWelcome, setShowWelcome] = useState(false)
   const [videoVisible, setVideoVisible] = useState(false)
-  //const [countdownVisible, setCountdownVisible] = useState(false)
+  const [countdownVisible, setCountdownVisible] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
-  //const handleVideoReady = useCallback(() => setVideoVisible(true), [])
-  //const handleVideoEnded = useCallback(() => {
-  //  setVideoVisible(false)
-  //  setCountdownVisible(true)
-  //}, [])
+  const handleVideoReady = useCallback(() => setVideoVisible(true), [])
+  const handleVideoEnded = useCallback(() => {
+    setVideoVisible(false)
+    setCountdownVisible(true)
+  }, [])
 
   const handleActivate = () => {
     const video = videoRef.current
