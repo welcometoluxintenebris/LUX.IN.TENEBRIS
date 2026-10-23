@@ -10,6 +10,22 @@ const LOADING_LINES = [
   'Ready for it?',
 ]
 
+const PUBLIC_ASSET_BASE_URL = import.meta.env.BASE_URL
+// 6 March 2027 at 12:00 in Europe/Madrid (UTC+1 on this date).
+const COUNTDOWN_TARGET = Date.UTC(2027, 2, 6, 11, 0, 0)
+
+function getCountdown() {
+  const total = Math.max(0, COUNTDOWN_TARGET - Date.now())
+
+  return {
+    total,
+    days: Math.floor(total / 86_400_000),
+    hours: Math.floor((total / 3_600_000) % 24),
+    minutes: Math.floor((total / 60_000) % 60),
+    seconds: Math.floor((total / 1_000) % 60),
+  }
+}
+
 function FogBackground() {
   return (
     <>
@@ -139,9 +155,11 @@ function LandingPage({ onActivate, fading }: { onActivate: () => void; fading: b
 
 function VideoScreen({ visible,
   videoRef,
+  onEnded,
 }: {
   visible: boolean
   videoRef: RefObject<HTMLVideoElement | null>
+  onEnded: () => void
 }) {
   
   return (
@@ -169,6 +187,60 @@ function VideoScreen({ visible,
         <source src={`${import.meta.env.BASE_URL}video.mp4`} type="video/mp4" />
       </video>
     </div>
+  )
+}
+
+function CountdownScreen() {
+  const [remaining, setRemaining] = useState(getCountdown)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => setRemaining(getCountdown()), 1000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  const units = [
+    { label: 'Días', value: remaining.days },
+    { label: 'Horas', value: remaining.hours },
+    { label: 'Minutos', value: remaining.minutes },
+    { label: 'Segundos', value: remaining.seconds },
+  ]
+
+  return (
+    <section className="countdown-screen" aria-labelledby="countdown-title">
+      <div className="countdown-haze countdown-haze-left" />
+      <div className="countdown-haze countdown-haze-right" />
+      <div className="countdown-content">
+        <p className="countdown-eyebrow">
+          {remaining.total > 0 ? 'La noche comienza en' : 'Ha llegado el momento'}
+        </p>
+        <h1 id="countdown-title" className="countdown-title">
+          {remaining.total > 0 ? (
+            <>Lux in <span>Tenebris</span></>
+          ) : (
+            <>La noche <span>es tuya</span></>
+          )}
+        </h1>
+
+        <time
+          className="countdown-grid"
+          dateTime="2027-03-06T12:00:00+01:00"
+          aria-label={`${remaining.days} días, ${remaining.hours} horas, ${remaining.minutes} minutos y ${remaining.seconds} segundos`}
+        >
+          {units.map(({ label, value }) => (
+            <span className="countdown-unit" key={label}>
+              <span className="countdown-value">{String(value).padStart(2, '0')}</span>
+              <span className="countdown-label">{label}</span>
+            </span>
+          ))}
+        </time>
+
+        <div className="countdown-date">
+          <span />
+          Madrid · 06 Marzo 2027 · 12:00
+          <span />
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -337,7 +409,13 @@ export default function App() {
   const [blackOverlay, setBlackOverlay] = useState(0)
   const [showWelcome, setShowWelcome] = useState(false)
   const [videoVisible, setVideoVisible] = useState(false)
+  const [countdownVisible, setCountdownVisible] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
+  const handleVideoReady = useCallback(() => setVideoVisible(true), [])
+  const handleVideoEnded = useCallback(() => {
+    setVideoVisible(false)
+    setCountdownVisible(true)
+  }, [])
 
   const handleActivate = () => {
     const video = videoRef.current
