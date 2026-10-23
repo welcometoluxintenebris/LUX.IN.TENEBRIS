@@ -12,7 +12,7 @@ const LOADING_LINES = [
 
 const PUBLIC_ASSET_BASE_URL = import.meta.env.BASE_URL
 // 6 March 2027 at 12:00 in Europe/Madrid (UTC+1 on this date).
-const COUNTDOWN_TARGET = Date.UTC(2026, 9, 23, 17, 52, 0)
+const COUNTDOWN_TARGET = Date.UTC(2026, 9, 23, 15, 55, 0)
 
 function getCountdown() {
   const total = Math.max(0, COUNTDOWN_TARGET - Date.now())
