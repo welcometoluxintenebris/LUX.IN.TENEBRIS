@@ -9,35 +9,27 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 22.12.0
-          cache: npm
 
-      - name: Check Node and npm
-        run: |
-          node --version
-          npm --version
-
-      - name: Install dependencies
-        run: npm install
+      - run: npm install
 
       - name: Verify Vite
         run: |
+          node --version
+          npm --version
           npm ls vite
-          test -x node_modules/.bin/vite
+          ls -l node_modules/.bin/vite
 
-      - name: Build
-        run: npm run build
+      - run: npm run build
         env:
           FIGMA_PUBLIC_URL: /LUX.IN.TENEBRIS
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
