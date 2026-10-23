@@ -14,9 +14,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
-      - run: npm install
+      - run: npm install --global npm@11.6.0
 
       - run: npm run build
         env:
