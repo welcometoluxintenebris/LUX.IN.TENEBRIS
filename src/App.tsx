@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type RefObject } from 'react'
+import { useCallback, useState, useEffect, useRef, type RefObject } from 'react'
 //import videoSrc from "public/videoplayback.mp4";
 
 type Scene = 'landing' | 'welcome'
@@ -174,8 +174,8 @@ function VideoScreen({ visible,
     }}>
       <video
         ref={videoRef}
-        loop
         playsInline
+        onEnded={onEnded}
         style={{
           width: '100%',
           height: '100%',
@@ -470,8 +470,9 @@ export default function App() {
       }} />
 
       {scene === 'landing' && <LandingPage onActivate={handleActivate} fading={landingFading} />}
-      {scene === 'welcome' && showWelcome && <WelcomePage onVideoReady={() => setVideoVisible(true)} />}
-      <VideoScreen visible={videoVisible} videoRef={videoRef} />
+      {scene === 'welcome' && showWelcome && <WelcomePage onVideoReady={handleVideoReady} />}
+      <VideoScreen visible={videoVisible} videoRef={videoRef} onEnded={handleVideoEnded} />
+      {countdownVisible && <CountdownScreen />}
     </div>
   )
 }
