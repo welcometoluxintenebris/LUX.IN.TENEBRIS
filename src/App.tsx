@@ -11,10 +11,10 @@ const LOADING_LINES = [
 ]
 
 const PUBLIC_ASSET_BASE_URL = import.meta.env.BASE_URL
-// 6 March 2027 at 12:00 in Europe/Madrid (UTC+1 on this date).
-const COUNTDOWN_TARGET = Date.UTC(2027, 2, 6, 11, 0, 0)
-const VIDEO_FADE_OUT_MS = 1200
-const COUNTDOWN_FADE_IN_DELAY_MS = 100
+// 6 March 2027 at 12:30 in Europe/Madrid (UTC+1 on this date).
+const COUNTDOWN_TARGET = Date.UTC(2027, 2, 6, 11, 30, 0)
+const VIDEO_FADE_OUT_MS = 3000
+const COUNTDOWN_FADE_IN_DELAY_MS = 2000
 //const COUNTDOWN_TARGET = Date.UTC(2026, 9, 23, 15, 55, 0)
 
 function getCountdown() {
@@ -219,7 +219,7 @@ function CountdownScreen() {
 
         <time
           className="countdown-grid"
-          dateTime="2027-03-06T12:00:00+01:00"
+          dateTime="2027-03-06T12:30:00+01:00"
           aria-label={`${remaining.days} días, ${remaining.hours} horas, ${remaining.minutes} minutos y ${remaining.seconds} segundos`}
         >
           {units.map(({ label, value }) => (
@@ -232,7 +232,7 @@ function CountdownScreen() {
 
         <div className="countdown-date">
           <span />
-          Elche · 06 Marzo 2027 · 12:00
+          Elche · 06 Marzo 2027 · 12:30
           <span />
         </div>
       </div>
