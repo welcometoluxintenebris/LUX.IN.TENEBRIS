@@ -13,6 +13,8 @@ const LOADING_LINES = [
 const PUBLIC_ASSET_BASE_URL = import.meta.env.BASE_URL
 // 6 March 2027 at 12:00 in Europe/Madrid (UTC+1 on this date).
 const COUNTDOWN_TARGET = Date.UTC(2027, 2, 6, 11, 0, 0)
+const VIDEO_FADE_OUT_MS = 1200
+const COUNTDOWN_FADE_IN_DELAY_MS = 100
 //const COUNTDOWN_TARGET = Date.UTC(2026, 9, 23, 15, 55, 0)
 
 function getCountdown() {
@@ -212,15 +214,8 @@ function CountdownScreen() {
       <div className="countdown-haze countdown-haze-right" />
       <div className="countdown-content">
         <p className="countdown-eyebrow">
-          {remaining.total > 0 ? 'La noche comienza en' : 'Ha llegado el momento'}
+          {remaining.total > 0 ? 'La noche te espera' : 'Ha llegado el momento'}
         </p>
-        <h1 id="countdown-title" className="countdown-title">
-          {remaining.total > 0 ? (
-            <>Lux in <span>Tenebris</span></>
-          ) : (
-            <>La noche <span>es tuya</span></>
-          )}
-        </h1>
 
         <time
           className="countdown-grid"
@@ -411,12 +406,32 @@ export default function App() {
   const [showWelcome, setShowWelcome] = useState(false)
   const [videoVisible, setVideoVisible] = useState(false)
   const [countdownVisible, setCountdownVisible] = useState(false)
+  const [videoTransition, setVideoTransition] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const handleVideoReady = useCallback(() => setVideoVisible(true), [])
   const handleVideoEnded = useCallback(() => {
     setVideoVisible(false)
     setCountdownVisible(true)
   }, [])
+
+  useEffect(() => {
+    if (!videoTransition) return
+
+    const revealCountdown = window.setTimeout(() => {
+      setVideoVisible(false)
+      setCountdownVisible(true)
+    }, VIDEO_FADE_OUT_MS)
+    const fadeInCountdown = window.setTimeout(
+      () => setVideoTransition(false),
+      VIDEO_FADE_OUT_MS + COUNTDOWN_FADE_IN_DELAY_MS,
+    )
+
+    return () => {
+      window.clearTimeout(revealCountdown)
+      window.clearTimeout(fadeInCountdown)
+    }
+  }, [videoTransition])
+
 
   const handleActivate = () => {
     const video = videoRef.current
@@ -474,6 +489,19 @@ export default function App() {
       {scene === 'welcome' && showWelcome && <WelcomePage onVideoReady={handleVideoReady} />}
       <VideoScreen visible={videoVisible} videoRef={videoRef} onEnded={handleVideoEnded} />
       {countdownVisible && <CountdownScreen />}
+
+      {/* Cubre el final del video y se retira suavemente sobre el contador. */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 80,
+        backgroundColor: '#000',
+        opacity: videoTransition ? 1 : 0,
+        pointerEvents: videoTransition ? 'all' : 'none',
+        transition: videoTransition
+          ? `opacity ${VIDEO_FADE_OUT_MS}ms cubic-bezier(0.4,0,0.6,1)`
+          : 'opacity 1.6s cubic-bezier(0.16,1,0.3,1)',
+      }} />
     </div>
   )
 }
