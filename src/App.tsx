@@ -185,7 +185,7 @@ function VideoScreen({ visible,
         }}
       >
         {/* Reemplaza con la ruta a tu video, ej: src="/video.mp4" */}
-        <source src={`${PUBLIC_ASSET_BASE_URL}video.mov`} type="video/quicktime" />
+        <source src={`${import.meta.env.BASE_URL}video.mp4`} type="video/mp4" />
       </video>
     </div>
   )
