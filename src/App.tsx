@@ -409,10 +409,7 @@ export default function App() {
   const [videoTransition, setVideoTransition] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
   const handleVideoReady = useCallback(() => setVideoVisible(true), [])
-  const handleVideoEnded = useCallback(() => {
-    setVideoVisible(false)
-    setCountdownVisible(true)
-  }, [])
+  const handleVideoEnded = useCallback(() => setVideoTransition(true), [])
 
   useEffect(() => {
     if (!videoTransition) return
