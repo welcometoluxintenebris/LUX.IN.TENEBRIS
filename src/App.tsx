@@ -13,7 +13,7 @@ const LOADING_LINES = [
 const PUBLIC_ASSET_BASE_URL = import.meta.env.BASE_URL
 // 6 March 2027 at 12:30 in Europe/Madrid (UTC+1 on this date).
 const COUNTDOWN_TARGET = Date.UTC(2027, 2, 6, 11, 30, 0)
-const VIDEO_FADE_OUT_MS = 1500
+const VIDEO_FADE_OUT_MS = 1000
 const COUNTDOWN_FADE_IN_DELAY_MS = 100
 //const COUNTDOWN_TARGET = Date.UTC(2026, 9, 23, 15, 55, 0)
 
